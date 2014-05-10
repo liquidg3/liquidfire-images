@@ -1,18 +1,10 @@
 define(['altair/facades/declare',
-    'altair/Lifecycle'
+        'liquidfire/modules/apollo/mixins/_HasPropertyTypesMixin'
 ], function (declare,
-             Lifecycle) {
+             _HasPropertyTypesMixin) {
 
-    return declare([Lifecycle], {
+    return declare([_HasPropertyTypesMixin], {
 
-        startup: function (options) {
-
-            //get options, fallback to default, finally blank obj
-            var _options = options || this.options || {};
-
-            return this.inherited(arguments);
-
-        }
 
     });
 

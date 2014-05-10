@@ -5,6 +5,7 @@ define(['dojo/_base/declare', 'apollo/propertytypes/_Base'],
 
         return declare([_Base], {
 
+
             key:     'image',
             options: {
                 w: {
@@ -41,6 +42,10 @@ define(['dojo/_base/declare', 'apollo/propertytypes/_Base'],
              */
             toJsValue: function (value, options, config) {
                 return value;
+            },
+
+            template: function (options) {
+                return 'liquidfire:Images/views/image';
             }
 
         });
