@@ -46,6 +46,20 @@ define(['dojo/_base/declare', 'apollo/propertytypes/_Base'],
 
             template: function (options) {
                 return 'liquidfire:Images/views/image';
+            },
+
+            fromFormSubmissionValue: function (value, options, config) {
+
+                if(value && value.size > 0) {
+
+                    console.log('what to do?');
+
+                }
+                //if there is no image and it's not
+                else {
+                    return null;
+                }
+
             }
 
         });

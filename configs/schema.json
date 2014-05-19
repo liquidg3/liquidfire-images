@@ -1,0 +1,12 @@
+{
+    "properties": {
+        "uploadDestination": {
+            "type":    "path",
+            "options": {
+                "label":       "Uploads Dir",
+                "description": "Where should uploads go?",
+                "required":    true
+            }
+        }
+    }
+}
