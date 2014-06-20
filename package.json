@@ -4,6 +4,7 @@
     "description":        "Supports rendering of images and even provides a cool new 'image' ",
     "altairDependencies": {
         "liquidfire:Apollo": ">=0.1.x",
+        "liquidfire:Files": ">=0.0.x",
         "altair:Adapters": ">=0.1.x"
     },
     "dependencies": {

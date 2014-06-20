@@ -1,9 +1,10 @@
-define(['dojo/_base/declare', 'apollo/propertytypes/_Base'],
+define(['dojo/_base/declare',
+        'liquidfire/modules/files/propertytypes/File'],
 
-    function (declare, _Base) {
+    function (declare, File) {
 
 
-        return declare([_Base], {
+        return declare([File], {
 
 
             key:     'image',
@@ -46,20 +47,6 @@ define(['dojo/_base/declare', 'apollo/propertytypes/_Base'],
 
             template: function (options) {
                 return 'liquidfire:Images/views/image';
-            },
-
-            fromFormSubmissionValue: function (value, options, config) {
-
-                if(value && value.size > 0) {
-
-                    console.log('what to do?');
-
-                }
-                //if there is no image and it's not
-                else {
-                    return null;
-                }
-
             }
 
         });
