@@ -5,6 +5,10 @@
         <label for="<%= name %>" class="property-label"><%= options.label %></label>
         <input type="file" name="<%= name %>">
 
+        <% if(value) { %>
+            <a href="/<%=value.relative%>"><%=value.filename%></a>
+        <% } %>
+
     </div>
 
 </div>

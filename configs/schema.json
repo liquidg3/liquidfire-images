@@ -1,11 +1,17 @@
 {
     "properties": {
-        "uploadDestination": {
+        "selectedAdapter": {
+            "type":    "nexus",
+            "options": {
+                "label":        "Selected Adapter",
+                "default": "./adapters/Gm"
+            }
+        },
+        "thumbnailDir":    {
             "type":    "path",
             "options": {
-                "label":       "Uploads Dir",
-                "description": "Where should uploads go?",
-                "required":    true
+                "label":       "Thumbnail Dir",
+                "description": "Where should thumbnails be rendered?"
             }
         }
     }

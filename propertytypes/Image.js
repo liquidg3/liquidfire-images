@@ -1,10 +1,17 @@
 define(['dojo/_base/declare',
-        'liquidfire/modules/files/propertytypes/File'],
+        'liquidfire/modules/files/propertytypes/File',
+        'altair/facades/mixin',
+        'altair/plugins/node!path',
+        'altair/Lifecycle'],
 
-    function (declare, File) {
+    function (declare,
+              File,
+              mixin,
+              pathUtil,
+              Lifecycle) {
 
 
-        return declare([File], {
+        return declare([File, Lifecycle], {
 
 
             key:     'image',
@@ -27,22 +34,21 @@ define(['dojo/_base/declare',
                 }
             },
 
+            startup: function () {
 
-            toViewValue: function (value, options, config) {
-                return 'we rendered a thumb!!!!';
+                //so the File propertytype works (we mix it in)
+                this.parent = this.nexus('liquidfire:Files');
+
+                return this.inherited(arguments);
+
             },
 
+            toViewValue: function (value, options, config) {
 
-            /**
-             * Not quite sure what to do here yet
-             *
-             * @param value
-             * @param options
-             * @param config
-             * @returns {*}
-             */
-            toJsValue: function (value, options, config) {
-                return value;
+                return this.nexus('liquidfire:Images').renderThumb(this.nexus('liquidfire:Files').resolveUploadedFilePath(value), options, config).then(function (path) {
+                    return '<img src="/' + path.relative + '" />';
+                })
+
             },
 
             template: function (options) {
