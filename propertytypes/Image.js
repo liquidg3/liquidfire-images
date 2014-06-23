@@ -45,9 +45,16 @@ define(['dojo/_base/declare',
 
             toViewValue: function (value, options, config) {
 
-                return this.nexus('liquidfire:Images').renderThumb(this.nexus('liquidfire:Files').resolveUploadedFilePath(value), options, config).then(function (path) {
-                    return '<img src="/' + path.relative + '" />';
-                })
+                var dfd = new this.Deferred();
+
+                this.nexus('liquidfire:Images').renderThumb(this.nexus('liquidfire:Files').resolveUploadedFilePath(value), options, config).then(function (path) {
+                    dfd.resolve('<img src="/' + path.relative + '" />');
+                }).otherwise(function (err) {
+                    this.log('failed to render thumb', value);
+                    dfd.resolve('Failed to render thumbnail.')
+                }.bind(this));
+
+                return dfd;
 
             },
 

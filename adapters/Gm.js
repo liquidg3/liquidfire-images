@@ -12,6 +12,8 @@ define(['altair/facades/declare',
              fs,
              mkdirp) {
 
+    gm = gm.subClass({ imageMagick: true });
+
     return declare([_Base], {
 
         _mover: null,
