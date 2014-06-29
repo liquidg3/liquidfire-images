@@ -3,25 +3,48 @@ define(['altair/facades/declare',
         'altair/plugins/node!gm',
         'altair/plugins/node!path',
         'altair/plugins/node!fs',
-        'altair/plugins/node!mkdirp'
-
+        'altair/plugins/node!mkdirp',
+        'apollo/_HasSchemaMixin',
+        'altair/Lifecycle'
 ], function (declare,
              _Base,
              gm,
              pathUtil,
              fs,
-             mkdirp) {
+             mkdirp,
+             _HasSchemaMixin,
+             Lifecycle) {
 
-    gm = gm.subClass({ imageMagick: true });
 
-    return declare([_Base], {
+
+    return declare([_Base, _HasSchemaMixin, Lifecycle], {
 
         _mover: null,
         _thumbCache:null,
+        _schema: {
+            properties: {
+                imageMagick: {
+                    type: 'boolean',
+                    options: {
+                        label: 'Use imageMagick',
+                        description: 'See help: http://aheckmann.github.io/gm/'
+                    }
+                }
+            }
+        },
 
-        constructor: function () {
+        startup: function (options) {
+
+            var _options = options || this.options || {};
+
+            //optionally use image magick
+            if(_options && _options.imageMagick) {
+                gm = gm.subClass({ imageMagick: true });
+            }
 
             this._thumbCache = {};
+
+            return this.inherited(arguments);
         },
 
         /**
@@ -49,7 +72,7 @@ define(['altair/facades/declare',
             }
 
             //setup cache
-            dfd = new this.Deferred(),
+            dfd = new this.Deferred();
             this._thumbCache[dest] = dfd;
 
             //check if file exists

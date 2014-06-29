@@ -7,11 +7,6 @@ define(['altair/facades/declare',
 
         renderThumb: function (source, options, config) {
             throw new Error('renderThumb on ' + this + ' implemented.');
-        },
-
-        generateNewName: function (source, options, config) {
-
-
         }
 
     });
