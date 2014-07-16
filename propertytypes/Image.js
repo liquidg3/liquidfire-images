@@ -48,7 +48,7 @@ define(['dojo/_base/declare',
                 var dfd = new this.Deferred();
 
                 this.nexus('liquidfire:Images').renderThumb(this.nexus('liquidfire:Files').resolveUploadedFilePath(value), options, config).then(function (path) {
-                    dfd.resolve('<img src="/' + path.relative + '" />');
+                    dfd.resolve('<img src="' + path.public + '" />');
                 }).otherwise(function (err) {
                     this.log('failed to render thumb', value);
                     dfd.resolve('Failed to render thumbnail.')

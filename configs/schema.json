@@ -1,17 +1,25 @@
 {
     "properties": {
-        "selectedAdapter": {
+        "selectedAdapter":    {
             "type":    "nexus",
             "options": {
-                "label":        "Selected Adapter",
+                "label":   "Selected Adapter",
                 "default": "./adapters/Gm"
             }
         },
-        "thumbnailDir":    {
+        "thumbnailDir":       {
             "type":    "path",
             "options": {
                 "label":       "Thumbnail Dir",
                 "description": "Where should thumbnails be rendered?"
+            }
+        },
+        "publicThumbnailUri": {
+            "type":    "string",
+            "options": {
+                "label":       "Public Thumbnail Dir",
+                "description": "This is where thumbnails will be made available to the public.",
+                "default":     "/public/_thumbnails"
             }
         }
     }

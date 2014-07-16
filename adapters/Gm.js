@@ -61,7 +61,8 @@ define(['altair/facades/declare',
                 dfd,
                 filename =  'w' + (w || '') + 'xh' + (h || '') + '-' + pathUtil.basename(source),
                 rel     = this.parent.resolveThumbnailFilePath(filename, { absolute: false }),
-                dest    = this.parent.resolveThumbnailFilePath(filename);
+                dest    = this.parent.resolveThumbnailFilePath(filename),
+                pub     = this.parent.resolveThumbnailFilePath(filename, { absolute: false, public: true });
 
             if(!dest) {
                 throw new Error('liquidfire:Images needs a thumbnailDir. See schema for details.');
@@ -81,6 +82,7 @@ define(['altair/facades/declare',
                 dfd.resolve({
                     relative: rel,
                     absolute: dest,
+                    public:   pub,
                     filename: pathUtil.basename(dest)
                 });
 
@@ -98,6 +100,7 @@ define(['altair/facades/declare',
                     return dfd.resolve({
                         relative: rel,
                         absolute: dest,
+                        public:   pub,
                         filename: pathUtil.basename(dest)
                     });
 
