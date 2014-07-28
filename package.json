@@ -1,6 +1,6 @@
 {
     "name":               "liquidfire:Images",
-    "version":            "0.0.6",
+    "version":            "0.0.8",
     "description":        "Supports rendering of images and even provides a cool new 'image' ",
     "altairDependencies": {
         "liquidfire:Apollo": ">=0.1.x",

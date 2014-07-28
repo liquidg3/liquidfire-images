@@ -27,7 +27,7 @@ define(['altair/facades/declare',
         onDidExecuteAlfredWebServer: function (e) {
 
             //only serve if we have a public uri set
-            if(this.get('publicThumbnailUri')) {
+            if(this.get('publicThumbnailUri') && this.get('thumbnailDir')) {
                 var server = e.get('server');
                 server.serveStatically(this.get('thumbnailDir'), this.get('publicThumbnailUri'));
             }
