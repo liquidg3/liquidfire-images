@@ -1,21 +1,44 @@
 define(['altair/facades/declare',
         'liquidfire/modules/apollo/mixins/_HasPropertyTypesMixin',
         'altair/modules/adapters/mixins/_HasAdaptersMixin',
-        'altair/plugins/node!path'
+        'altair/plugins/node!path',
+        'altair/mixins/_AssertMixin'
 ], function (declare,
              _HasPropertyTypesMixin,
              _HasAdaptersMixin,
-             pathUtil) {
+             pathUtil,
+             _AssertMixin) {
 
-    return declare([_HasPropertyTypesMixin, _HasAdaptersMixin], {
+    return declare([_HasPropertyTypesMixin, _HasAdaptersMixin, _AssertMixin], {
 
 
         startup: function (options) {
 
+            var _options = options || this.options || {};
+
             //when Alfred starts, lets share our upload dir
             this.on('titan:Alfred::did-execute-server').then(this.hitch('onDidExecuteAlfredWebServer'));
 
+            //setup endpoint for the thumb generator
+            this.on('titan:Alfred::will-execute-app').then(this.hitch('onWillExecuteAlfredApp'));
+
             return this.inherited(arguments);
+
+        },
+
+        /**
+         * Setup the alfred route to generate thumbs.
+         *
+         * @param e
+         */
+        onWillExecuteAlfredApp: function (e) {
+
+            var options = e.get('options');
+
+            options.routes['/v1/images/generate-thumb'] = {
+                action: 'liquidfire:Images/controllers/Images::generateThumb',
+                layout: false
+            };
 
         },
 
@@ -50,7 +73,13 @@ define(['altair/facades/declare',
                 throw new Error('No image adapter selected (for thumbnail rendering).');
             }
 
-            return adapter.renderThumb(path, options, config);
+            try {
+                return adapter.renderThumb(path, options, config);
+            } catch (e) {
+                var dfd = new this.Deferred();
+                dfd.reject(e);
+                return dfd;
+            }
         },
 
         /**
@@ -64,6 +93,10 @@ define(['altair/facades/declare',
 
             var path,
                 _options = options || {};
+
+            this.assert(this.get('publicThumbnailUri'), 'You must set a publicThumbnailUri in your modules.json to generate thumbnails.');
+            this.assert(this.get('thumbnailDir'), 'You must set a thumbnailDir in your modules.json to generate thumbnails.');
+
 
             if(_options.public) {
                 path = pathUtil.join(this.get('publicThumbnailUri', null, options), file);

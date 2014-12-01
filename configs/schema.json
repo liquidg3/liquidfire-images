@@ -21,6 +21,14 @@
                 "description": "This is where thumbnails will be made available to the public.",
                 "default":     "/public/_thumbnails"
             }
+        },
+        "publicThumbGeneration": {
+            "type":    "boolean",
+            "options": {
+                "label":       "Enable Public Thumbnail Generation",
+                "description": "I will expose an endpoint at /v1/images/generate-thumb",
+                "default":     false
+            }
         }
     }
 }
