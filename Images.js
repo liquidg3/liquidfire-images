@@ -35,7 +35,7 @@ define(['altair/facades/declare',
 
             var options = e.get('options');
 
-            options.routes['/v1/images/generate-thumb'] = {
+            options.routes['/v1/images/thumb'] = {
                 action: 'liquidfire:Images/controllers/Images::generateThumb',
                 layout: false
             };
