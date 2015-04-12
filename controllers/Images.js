@@ -8,7 +8,7 @@ define(['altair/facades/declare',
 
         generateThumb: function (e) {
 
-            var values = e.get('request').query(),
+            var values  = e.get('request').query(),
                 request = e.get('request'),
                 path,
                 height  = Math.min(values.h, 500),
@@ -17,7 +17,7 @@ define(['altair/facades/declare',
 
             if (!values.file) {
 
-                response.setStatus(401);
+                response.setStatus(422);
 
                 return {
                     error: "You must pass a file."
@@ -35,10 +35,12 @@ define(['altair/facades/declare',
 
                     response.redirect(thumb.public);
 
+                }.bind(this)).otherwise(function (err) {
 
-                }.bind(this)).otherwise(function () {
+                    this.err('Image upload failed');
+                    this.err(err);
 
-                    response.setStatus(401);
+                    response.setStatus(500);
 
                     return {
                         error: 'I could not find the file "' + values.file + '".'
