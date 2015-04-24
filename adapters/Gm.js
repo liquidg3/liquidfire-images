@@ -91,7 +91,7 @@ define(['altair/facades/declare',
                 this.promise(mkdirp, pathUtil.dirname(dest)).then(function () {
 
                     //run image operations
-                    var i   = gm(source).resize(w,h);
+                    var i   = gm(source).resize(w,h).autoOrient();
 
                     return this.promise(i, 'write', dest);
 
