@@ -37,10 +37,10 @@ define(['altair/facades/declare',
 
                 }.bind(this)).otherwise(function (err) {
 
-                    this.err('Image upload failed');
+                    this.err('Failed to generate thumb');
                     this.err(err);
 
-                    response.setStatus(500);
+                    response.setStatus(404);
 
                     return {
                         error: 'I could not find the file "' + values.file + '".'
