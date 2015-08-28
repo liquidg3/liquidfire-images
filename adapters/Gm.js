@@ -1,6 +1,5 @@
 define(['altair/facades/declare',
         './_Base',
-        'altair/plugins/node!gm',
         'altair/plugins/node!path',
         'altair/plugins/node!fs',
         'altair/plugins/node!mkdirp',
@@ -8,7 +7,6 @@ define(['altair/facades/declare',
         'altair/Lifecycle'
 ], function (declare,
              _Base,
-             gm,
              pathUtil,
              fs,
              mkdirp,
@@ -36,11 +34,6 @@ define(['altair/facades/declare',
         startup: function (options) {
 
             var _options = options || this.options || {};
-
-            //optionally use image magick
-            if(_options && _options.imageMagick) {
-                gm = gm.subClass({ imageMagick: true });
-            }
 
             this._thumbCache = {};
 
@@ -90,6 +83,19 @@ define(['altair/facades/declare',
 
                 this.promise(mkdirp, pathUtil.dirname(dest)).then(function () {
 
+                    if (!gm) {
+
+                        require(['altair/plugins/node!gm'], function (gm) {
+
+                            //optionally use image magick
+                            if(this.options && this.options.imageMagick) {
+                                gm = gm.subClass({ imageMagick: true });
+                            }
+
+                        });
+
+
+                    }
                     //run image operations
                     var i   = gm(source).resize(w,h).autoOrient();
 

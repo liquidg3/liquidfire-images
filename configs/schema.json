@@ -4,7 +4,7 @@
             "type":    "nexus",
             "options": {
                 "label":   "Selected Adapter",
-                "default": "./adapters/Gm"
+                "default": "adapters/Gm"
             }
         },
         "thumbnailDir":       {
