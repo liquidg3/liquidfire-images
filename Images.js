@@ -1,8 +1,8 @@
 define(['altair/facades/declare',
-        'liquidfire/modules/apollo/mixins/_HasPropertyTypesMixin',
-        'altair/modules/adapters/mixins/_HasAdaptersMixin',
-        'altair/plugins/node!path',
-        'altair/mixins/_AssertMixin'
+    'liquidfire/modules/apollo/mixins/_HasPropertyTypesMixin',
+    'altair/modules/adapters/mixins/_HasAdaptersMixin',
+    'altair/plugins/node!path',
+    'altair/mixins/_AssertMixin'
 ], function (declare,
              _HasPropertyTypesMixin,
              _HasAdaptersMixin,
@@ -16,11 +16,16 @@ define(['altair/facades/declare',
 
             var _options = options || this.options || {};
 
-            //when Alfred starts, lets share our upload dir
-            this.on('titan:Alfred::did-execute-server').then(this.hitch('onDidExecuteAlfredWebServer'));
+            if (this.nexus('titan:Alfred')) {
 
-            //setup endpoint for the thumb generator
-            this.on('titan:Alfred::will-execute-app').then(this.hitch('onWillExecuteAlfredApp'));
+                //when Alfred starts, lets share our upload dir
+                this.on('titan:Alfred::did-execute-server').then(this.hitch('onDidExecuteAlfredWebServer'));
+
+                //setup endpoint for the thumb generator
+                this.on('titan:Alfred::will-execute-app').then(this.hitch('onWillExecuteAlfredApp'));
+
+            }
+
 
             return this.inherited(arguments);
 
