@@ -1,10 +1,10 @@
 define(['altair/facades/declare',
-        './_Base',
-        'altair/plugins/node!path',
-        'altair/plugins/node!fs',
-        'altair/plugins/node!mkdirp',
-        'apollo/_HasSchemaMixin',
-        'altair/Lifecycle'
+    './_Base',
+    'altair/plugins/node!path',
+    'altair/plugins/node!fs',
+    'altair/plugins/node!mkdirp',
+    'apollo/_HasSchemaMixin',
+    'altair/Lifecycle'
 ], function (declare,
              _Base,
              pathUtil,
@@ -14,6 +14,7 @@ define(['altair/facades/declare',
              Lifecycle) {
 
 
+    var gm;
 
     return declare([_Base, _HasSchemaMixin, Lifecycle], {
 
@@ -49,13 +50,15 @@ define(['altair/facades/declare',
          */
         renderThumb: function (source, options, config) {
 
-            var w       = options.w || null,
-                h       = options.h || null,
+            var _options    = options || {},
+                w           = _options.w || null,
+                h           = _options.h || null,
                 dfd,
-                filename =  'w' + (w || '') + 'xh' + (h || '') + '-' + pathUtil.basename(source),
-                rel     = this.parent.resolveThumbnailFilePath(filename, { absolute: false }),
-                dest    = this.parent.resolveThumbnailFilePath(filename),
-                pub     = this.parent.resolveThumbnailFilePath(filename, { absolute: false, public: true });
+                suffix      = _options.suffix || '',
+                filename    = suffix + 'w' + (w || '') + 'xh' + (h || '') + '-' + pathUtil.basename(source),
+                rel         = filename,
+                dest        = this.parent.resolveThumbnailFilePath(filename),
+                pub         = this.parent.resolveThumbnailFilePath(filename, { absolute: false, public: true });
 
             if(!dest) {
                 throw new Error('liquidfire:Images needs a thumbnailDir. See schema for details.');
@@ -64,6 +67,7 @@ define(['altair/facades/declare',
             if(this._thumbCache[dest]) {
                 return this._thumbCache[dest];
             }
+
 
             //setup cache
             dfd = new this.Deferred();
@@ -85,15 +89,16 @@ define(['altair/facades/declare',
 
                     if (!gm) {
 
-                        require(['altair/plugins/node!gm'], function (gm) {
+                        require(['altair/plugins/node!gm'], function (_gm) {
 
                             //optionally use image magick
                             if(this.options && this.options.imageMagick) {
-                                gm = gm.subClass({ imageMagick: true });
+                                gm = _gm.subClass({ imageMagick: true });
+                            } else {
+                                gm = _gm;
                             }
 
-                        });
-
+                        }.bind(this));
 
                     }
                     //run image operations
@@ -120,8 +125,6 @@ define(['altair/facades/declare',
             }.bind(this));
 
             return dfd;
-
-
 
         }
 

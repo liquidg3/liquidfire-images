@@ -64,7 +64,8 @@ define(['altair/facades/declare',
 
 
         /**
-         * Render a thumbnail using the selected adapter (if one in
+         * Render a thumbnail using the selected adapter
+         *
          * @param path
          * @param options
          * @param config
