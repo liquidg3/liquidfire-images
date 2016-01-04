@@ -117,9 +117,10 @@ define(['altair/facades/declare',
 
                 }.bind(this)).otherwise(function (err) {
 
+                    this.err('Failed to render thumb at', source);
                     dfd.reject(err);
 
-                });
+                }.bind(this));
 
 
             }.bind(this));
