@@ -125,7 +125,7 @@ define(['altair/facades/declare',
 
             }.bind(this));
 
-            return dfd;
+            return dfd.promise;
 
         }
 

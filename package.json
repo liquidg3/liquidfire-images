@@ -8,7 +8,7 @@
         "altair:Adapters":      ">=0.1.x"
     },
     "dependencies": {
-        "gm": ">=1.16.x"
+        "gm": ">=1.21.x"
     },
     "events":             {
         "will-generate-thumb": "A thumbnail is about to be generated",
