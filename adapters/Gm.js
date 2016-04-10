@@ -117,7 +117,9 @@ define(['altair/facades/declare',
 
                 }.bind(this)).otherwise(function (err) {
 
-                    this.err('Failed to render thumb at', source);
+                    this._thumbCache[dest] = false;
+
+                    this.err('failed to generate thumb from ' + source);
                     dfd.reject(err);
 
                 }.bind(this));
@@ -125,7 +127,7 @@ define(['altair/facades/declare',
 
             }.bind(this));
 
-            return dfd.promise;
+            return dfd;
 
         }
 

@@ -1,6 +1,6 @@
 {
     "name":               "liquidfire:Images",
-    "version":            "0.2.1",
+    "version":            "0.2.2",
     "description":        "Supports rendering of images and even provides a cool new 'image' property type for entities.",
     "altairDependencies": {
         "liquidfire:Apollo":    ">=0.1.x",
